@@ -1,7 +1,6 @@
 # **=============================== 配置文件来源信息 ===============================**
-# 作者 Kerronex 地址 https://github.com/HenryChiao/MIHOMO_YAMLS/tree/main/THEYAMLS/General_Config
-# 无DNS泄露，
-# 关闭ipv6
+# 作者 Kerronex 原文件地址 https://github.com/HenryChiao/MIHOMO_YAMLS/tree/main/THEYAMLS/General_Config
+# 无DNS泄露， 关闭ipv6 开启fakeip
 # 开启fakeip，无DNS泄露防护极强，适配tun模式，极少数老旧软件或特定游戏会检查 IP 地址是否合法（比如觉得 198.18 开头的 IP 很奇怪），导致无法联网。普通用户： 强烈建议使用 fake-ip。它能提供最顺滑的上网体验，并且极大程度避免了 DNS 泄露和污染问题。
 # 机场订阅模块如有问题，参考 Clash Verge REV-cvr配置文件
 
@@ -81,8 +80,8 @@ tcp-concurrent: true # 启用 TCP 并发连接。这允许 Clash 同时建立多
 log-level: info # 查东西时改成info
 find-process-mode: 'strict' # 设置进程查找模式为严格模式，Clash 会更精确地识别和匹配网络流量来源的进程.控制是否让 Clash 去匹配进程,always 开启，强制匹配所有进程,strict 默认，由 Clash 判断是否开启,off 不匹配进程，推荐在路由器上使用此模式
 global-client-fingerprint: chrome # 设置全局客户端指纹为 Chrome，使 Clash 在建立连接时模拟 Chrome 浏览器的 TLS 指纹，增强隐私性和绕过某些网站的指纹检测
-keep-alive-idle: 600 # 空闲连接保持。如果一个连接 600 秒没动静才断开，减少频繁重新握手的耗电。
-keep-alive-interval: 15 # 心跳包间隔。每 15 秒发个小包保活，防止被网络运营商强行掐断。
+keep-alive-idle: 15 # 空闲连接保持。如果一个连接 600 秒没动静才断开，减少频繁重新握手的耗电。
+keep-alive-interval: 10 # 心跳包间隔。每 15 秒发个小包保活，防止被网络运营商强行掐断。
 
 # **=============================== 控制面板UI界面 ===============================**
 # 远程控制与图形界面”模块。打开代理自动下载UI界面，下载完成可访问。

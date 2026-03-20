@@ -3,7 +3,6 @@
 # 在原文件基础上更改以下设置：设置节点信息，关闭ipv6，设置UI面板，入站监听，设置tun，设置geo数据库，设置DNS，设置代理分组，设置规则，设置规则集，
 # IPv6：关 TUN模式：关  代理组依据路由规则自定义，路由规则和规则集自定义，
 
-
 # **=============================== 节点健康延迟检测 ===============================**
 # 全部节点健康检测
 global-interval: 3600   
@@ -82,8 +81,8 @@ unified-delay: true
 tcp-concurrent: true
 global-ua: "Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Mobile Safari/537.36"
 # TCP Keep Alive 设置, 在Android强制为 disable-keep-alive: true
-keep-alive-idle: 600
-keep-alive-interval: 30
+keep-alive-idle: 15
+keep-alive-interval: 10
 disable-keep-alive: false
 # 允许局域网
 allow-lan: true
@@ -91,7 +90,7 @@ bind-address: "*"
 lan-allowed-ips: ["0.0.0.0/0", "::/0"]
 lan-disallowed-ips: []
 # 缓存和ntp
-profile: {store-selected: true, store-fake-ip: true, tracing: true, reload-config-on-change: true, keep-alive-interval: 300}
+profile: {store-selected: true, store-fake-ip: true, tracing: true, reload-config-on-change: true}
 ntp: {enable: true, server: ntp.aliyun.com, port: 123, interval: 30, dialer-proxy: "", write-to-system: false}
 # 实验性配置
 experimental:
