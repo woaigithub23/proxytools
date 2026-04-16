@@ -131,7 +131,7 @@ listeners:
 tun:
   enable: false
   device: mihomo
-  # stack选项：mixed首选，自动混合/system稳定/gvisor适合UDP游戏
+  # stack选项：mixed首选，自动混合/system稳定/gvisor适合UDP游戏，douyin.com使用system模式
   stack: mixed
   # mtu 最大传输单元。主路由wan口mtu1480，clash需要20-40字节封装，经测试1440最合适，其他值影响网速。
   mtu: 1440
@@ -167,7 +167,7 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.0/16
   fake-ip-filter-mode: blacklist
-  fake-ip-filter: ["localhost","+.lan","+.local","+.arpa","+.ntp.org","captive.apple.com","connectivitycheck.gstatic.com","msftconnecttest.com","msftncsi.com","+.openai.com","+.srv.nintendo.net","+.stun.playstation.net","+.xboxlive.com","report-v2.samsung.japps.cn","rule-set:private"]
+  fake-ip-filter: ["localhost","+.lan","+.local","+.arpa","+.ntp.org","captive.apple.com","connectivitycheck.gstatic.com","msftconnecttest.com","msftncsi.com","+.openai.com","+.srv.nintendo.net","+.stun.playstation.net","+.xboxlive.com","report-v2.samsung.japps.cn","rule-set:private","+.douyin.com"]
   # fake-ip-range6: fdfe:dcba:9876::1/64
   # fake-ip-ttl: 1
   # use-hosts: true
