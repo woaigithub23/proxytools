@@ -24,9 +24,9 @@ proxy-providers:
   Airport_01:
     <<: *PProviders
     proxy: "直连"
-    url: "订阅链接机场"
+    url: "订阅链接机场1"
     override:
-      additional-prefix: '[机场名称-]'
+      additional-prefix: '[机场名称1-]'
       udp: true
       # skip-cert-verify: true
   Airport_02:
@@ -70,7 +70,7 @@ global-client-fingerprint: chrome
 log-level: warning
 ipv6: false
 etag-support: true
-# 进程匹配模式，控制是否让 Clash 去匹配进程，always Windows系统推荐，强制匹配所有进程。strict 默认由Clash判断是否开启。off 不匹配进程 推荐在路由器上使用此模式
+# 进程匹配模式，控制是否让 Clash 去匹配进程，always 强制匹配所有进程，strict 默认由Clash判断是否开启，off 不匹配进程 推荐在路由器上使用此模式
 find-process-mode: always
 unified-delay: true
 # TCP 并发
@@ -131,13 +131,13 @@ listeners:
 tun:
   enable: false
   device: mihomo
-  # stack选项：mixed首选，自动混合/system稳定/gvisor适合UDP游戏
+  # stack选项：system首选稳定/gvisor适合UDP游戏/mixed自动混合
   stack: mixed
-  # mtu 最大传输单元。主路由wan口mtu1480，clash需要20-40字节封装，经测试1440最合适，其他值影响网速。
+  # mtu 最大传输单元。主路由wan口mtu 1480，clash需要20-40字节封装，经测试1440最合适，其他值影响网速。
   mtu: 1440
   strict-route: true
   dns-hijack: ["any:53", "tcp://any:53"]
-  auto-route: true
+  auto-route: true  
   auto-detect-interface: true
   # auto-redirect: true
   # gso: true
@@ -145,15 +145,14 @@ tun:
   # endpoint-independent-nat: true
   # udp-timeout: 60
   # disable-icmp-forwarding: true
-  # route-exclude-address-set: ["rule-set:cn", "geoip:cn", "geoip:private"]
-  # route-exclude-cidr: ["192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12"]  
+  # 仅支持 Linux route-exclude-address-set: [""]
 
 
 # **=============================== DNS ===============================**
 
 dns-anchor:
   cn-dns: &cn-dns ["https://223.5.5.5/dns-query", "https://dns.alidns.com/dns-query"]
-  global-dns: &global-dns ["https://8.8.8.8/dns-query", "https://dns.google/dns-query", "https://8.8.4.4/dns-query"]
+  global-dns: &global-dns ["https://8.8.8.8/dns-query", "https://dns.google/dns-query"]
 
 dns:
   enable: true
@@ -167,32 +166,32 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.0/16
   fake-ip-filter-mode: blacklist
-  fake-ip-filter: ["localhost","+.lan","+.local","+.arpa","+.ntp.org","captive.apple.com","connectivitycheck.gstatic.com","msftconnecttest.com","msftncsi.com","+.openai.com","+.srv.nintendo.net","+.stun.playstation.net","+.xboxlive.com","report-v2.samsung.japps.cn","rule-set:private","+.douyin.com"]
+  fake-ip-filter: ["localhost","+.lan","+.local","+.arpa","+.ntp.org","captive.apple.com","connectivitycheck.gstatic.com","msftconnecttest.com","msftncsi.com","+.openai.com","+.srv.nintendo.net","+.stun.playstation.net","+.xboxlive.com","report-v2.samsung.japps.cn","rule-set:private"]
   # fake-ip-range6: fdfe:dcba:9876::1/64
   # fake-ip-ttl: 1
   # use-hosts: true
   # use-system-hosts: true
 
-  # 如谷歌引导服务器default-nameserver 无法联网，使用阿里DNS default-nameserver 
+  # default-nameserver设置如谷歌DNS无法联网，使用阿里DNS
   default-nameserver: ["https://223.5.5.5/dns-query", "https://223.6.6.6/dns-query"]
-  # nameserver: ["https://dns.google/dns-query", "https://8.8.8.8/dns-query"]
+  nameserver: ["https://223.5.5.5/dns-query", "https://dns.alidns.com/dns-query"]
+  direct-nameserver: ["https://223.5.5.5/dns-query", "https://dns.alidns.com/dns-query"]
+  proxy-server-nameserver: ["https://223.5.5.5/dns-query", "https://dns.alidns.com/dns-query"]
+
   # 使用代理进行DNS解析，需要复制创建一个名为 美国服务器节点 的节点，或者，有 美国节点 代理分组 分组内有可用节点。 
-  nameserver: ["https://dns.google/dns-query#proxy=美国服务器节点", "https://dns.google/dns-query#proxy=美国节点", "https://dns.google/dns-query", "https://8.8.8.8/dns-query"]
-  direct-nameserver: ["https://dns.alidns.com/dns-query", "https://doh.pub/dns-query"]
-  proxy-server-nameserver: ["https://dns.alidns.com/dns-query"]
-  fallback: ["https://dns.google/dns-query"]
-  fallback-filter: {geoip: true, geoip-code: CN, geosite: [gfw,geolocation-!cn], ipcidr: ["240.0.0.0/4"]}
-  direct-nameserver-follow-policy: true
-  nameserver-policy:
-    "geosite:category-ads-all": ["https://dns.adguard.com/dns-query"]
-    "geosite:google,youtube,telegram,twitter,facebook,binance,okx,netflix,openai,google-gemini,bytedance-ai-!cn,tiktok,instagram,whatsapp,greatfire": *global-dns
-    "geosite:github,microsoft,onedrive": *global-dns
-    "geosite:gfw,tld-!cn,category-social-media-!cn,geolocation-!cn,category-ai-!cn,category-cdn-!cn,category-scholar-!cn,category-browser-!cn": *global-dns
+  # nameserver: ["https://dns.google/dns-query#proxy=美国服务器节点", "https://dns.google/dns-query#proxy=美国节点", "https://dns.google/dns-query"]
+  # fallback: ["https://dns.google/dns-query"]
+  # fallback-filter: {geoip: true, geoip-code: CN, geosite: [gfw,geolocation-!cn], ipcidr: ["240.0.0.0/4"]}
+  # direct-nameserver-follow-policy: true
+  #nameserver-policy:
+    #"geosite:category-ads-all": ["https://dns.adguard.com/dns-query"]
+    #"geosite:apple-cn,paypal,ifast,wise,alibaba,tencent,jd,douyin,xiaohongshu": *cn-dns
+    #"geosite:private,cn,category-ai-cn,category-cdn-cn,category-ntp-cn,category-bank-cn,category-media-cn,category-social-media-cn,category-entertainment-cn": *cn-dns
+    #"geosite:category-collaborate-cn,category-securities-cn,category-education-cn,category-netdisk-cn,category-httpdns-cn,category-games-cn,category-wiki-cn,category-dev-cn": *cn-dns
 
-    "geosite:apple-cn,paypal,ifast,wise,alibaba,tencent,jd,douyin,xiaohongshu": *cn-dns
-    "geosite:private,cn,category-ai-cn,category-cdn-cn,category-ntp-cn,category-bank-cn,category-media-cn,category-social-media-cn,category-entertainment-cn": *cn-dns
-    "geosite:category-collaborate-cn,category-securities-cn,category-education-cn,category-netdisk-cn,category-httpdns-cn,category-games-cn,category-wiki-cn,category-dev-cn": *cn-dns
-
+    #"geosite:google,youtube,telegram,twitter,facebook,binance,okx,netflix,openai,google-gemini,bytedance-ai-!cn,tiktok,instagram,whatsapp,greatfire": *global-dns
+    #"geosite:github,microsoft,onedrive": *global-dns
+    #"geosite:gfw,tld-!cn,category-social-media-!cn,geolocation-!cn,category-ai-!cn,category-cdn-!cn,category-scholar-!cn,category-browser-!cn": *global-dns
 
 
 # **=============================== DNS 域名嗅探 ===============================**
@@ -344,6 +343,17 @@ rules:
   - RULE-SET,tld-!cn,🚀默认代理
   - RULE-SET,gfw,🚀默认代理
 
+  # 国内直连 
+  - RULE-SET,category-wiki-cn,直连
+  - RULE-SET,category-dev-cn,直连
+  - RULE-SET,category-collaborate-cn,直连
+  - RULE-SET,category-securities-cn,直连
+  - RULE-SET,category-education-cn,直连
+  - RULE-SET,category-entertainment-cn,直连
+  - RULE-SET,category-games-cn,直连
+  - RULE-SET,direct,直连
+  - RULE-SET,cn,直连    
+
   # 代理IP
   - RULE-SET,cloudflare_ip,直连,no-resolve
   - RULE-SET,google_ip,🔍Google,no-resolve
@@ -354,18 +364,6 @@ rules:
   # - IP-ASN,8075,🖥微软,no-resolve
   # - IP-ASN,8070,🖥微软,no-resolve
 
-  
-  # 国内直连 
-  - RULE-SET,category-wiki-cn,直连
-  - RULE-SET,category-dev-cn,直连
-  - RULE-SET,category-collaborate-cn,直连
-  - RULE-SET,category-securities-cn,直连
-  - RULE-SET,category-education-cn,直连
-  - RULE-SET,category-entertainment-cn,直连
-  - RULE-SET,category-games-cn,直连
-  - RULE-SET,direct,直连
-  - RULE-SET,cn,直连  
-  
   # 直连IP
   - RULE-SET,private_ip,直连,no-resolve
   - RULE-SET,cn_ip,直连,no-resolve  
@@ -513,14 +511,6 @@ rule-providers:
 
 # mihomo官方mrs地址，替换private  geosite https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs 
 # mihomo官方mrs地址，替换private  geoip https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/private.mrs 
-
-
-
-
-
-
-
-
 
 
 
