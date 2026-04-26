@@ -147,7 +147,6 @@ tun:
   # disable-icmp-forwarding: true
   # 仅支持 Linux route-exclude-address-set: [""]
 
-
 # **=============================== DNS ===============================**
 
 dns-anchor:
@@ -174,14 +173,15 @@ dns:
 
   # default-nameserver设置如谷歌DNS无法联网，使用阿里DNS
   default-nameserver: ["https://223.5.5.5/dns-query", "https://223.6.6.6/dns-query"]
-  nameserver: ["https://223.5.5.5/dns-query", "https://dns.alidns.com/dns-query"]
+  # 使用代理进行DNS解析，可以使用代理组--名称和代理组一致，或复制粘贴创建一个名为 美国服务器节点 的节点。 
+  nameserver: ["https://dns.google/dns-query#proxy=🚀默认代理", "https://dns.google/dns-query#proxy=美国服务器节点", "https://dns.google/dns-query#proxy=🦅美国节点", "https://dns.google/dns-query"]
+  # nameserver: ["https://223.5.5.5/dns-query", "https://dns.alidns.com/dns-query"]
   direct-nameserver: ["https://223.5.5.5/dns-query", "https://dns.alidns.com/dns-query"]
   proxy-server-nameserver: ["https://223.5.5.5/dns-query", "https://dns.alidns.com/dns-query"]
 
-  # 使用代理进行DNS解析，需要复制创建一个名为 美国服务器节点 的节点，或者，有 美国节点 代理分组 分组内有可用节点。 
-  # nameserver: ["https://dns.google/dns-query#proxy=美国服务器节点", "https://dns.google/dns-query#proxy=美国节点", "https://dns.google/dns-query"]
   # fallback: ["https://dns.google/dns-query"]
   # fallback-filter: {geoip: true, geoip-code: CN, geosite: [gfw,geolocation-!cn], ipcidr: ["240.0.0.0/4"]}
+  # 配置direct-nameserver-follow-policy: true 和nameserver-policy会使访问国内站延迟增高。  
   # direct-nameserver-follow-policy: true
   #nameserver-policy:
     #"geosite:category-ads-all": ["https://dns.adguard.com/dns-query"]
@@ -192,6 +192,7 @@ dns:
     #"geosite:google,youtube,telegram,twitter,facebook,binance,okx,netflix,openai,google-gemini,bytedance-ai-!cn,tiktok,instagram,whatsapp,greatfire": *global-dns
     #"geosite:github,microsoft,onedrive": *global-dns
     #"geosite:gfw,tld-!cn,category-social-media-!cn,geolocation-!cn,category-ai-!cn,category-cdn-!cn,category-scholar-!cn,category-browser-!cn": *global-dns
+
 
 
 # **=============================== DNS 域名嗅探 ===============================**
