@@ -320,9 +320,9 @@ rules:
   - RULE-SET,openai,🤖OpenAI
   # - RULE-SET,anthropic-claude,🤖Claude
   - RULE-SET,bytedance@!cn,🤖字节海外&AI
- 
+  
+  - RULE-SET,youtube,📺Youtube
   - RULE-SET,google,🔍Google
-  - RULE-SET,youtube,📺Youtube  
   - RULE-SET,github,🚀默认代理
   - RULE-SET,spotify,🎵Spotify
   - RULE-SET,lark,📚Lark文档
